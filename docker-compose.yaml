@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: 'postgres:18'
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    volumes:
+      - './pgdata:/var/lib/postgresql/data/pgdata'
+    command: |
+      postgres 
+               -c checkpoint_completion_target="0.9"
+               -c effective_cache_size=3GB
+               -c effective_io_concurrency="200"
+               -c file_copy_method=copy
+               -c io_max_combine_limit="16"
+               -c io_max_concurrency="64"
+               -c io_method=worker
+               -c io_workers="2"
+               -c log_autovacuum_min_duration="0"
+               -c log_checkpoints="on"
+               -c log_connections="on"
+               -c log_disconnections="on"
+               -c log_lock_waits="on"
+               -c log_min_duration_statement=10s
+               -c log_temp_files="0"
+               -c maintenance_io_concurrency="200"
+               -c maintenance_work_mem=205MB
+               -c max_connections="100"
+               -c max_parallel_workers="2"
+               -c max_parallel_workers_per_gather="2"
+               -c max_wal_size=3GB
+               -c max_worker_processes="8"
+               -c min_wal_size=2GB
+               -c random_page_cost="1.1"
+               -c shared_buffers=1GB
+               -c wal_buffers="-1"
+               -c work_mem=10MB
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - server-side
+    tty: true
+    stdin_open: true
+
+networks:
+  server-side:
+  client-side:
