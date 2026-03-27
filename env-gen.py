@@ -81,6 +81,7 @@ env_file.write("REGISTRY_HOST={}\n".format(REGISTRY_HOST))
 print("Creating a registry.yml...");
 registry_file = open("registry.yml", "w")
 registry_file.write(registry_config.format(REGISTRY_HOST))
+registry_file.close()
 
 env_file.close()
 print("Done.")
