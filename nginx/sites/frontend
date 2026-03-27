@@ -1,6 +1,6 @@
 upstream frontend {
   keepalive 32; 
-  server 127.0.0.1:8080; 
+  server 127.0.0.1:8888; 
 }
 
 server {      
