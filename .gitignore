@@ -1,3 +1,6 @@
 *.env
 registry.yml
 htpasswd
+registry-auth*
+registry-data*
+pgdata/
