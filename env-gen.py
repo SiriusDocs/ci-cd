@@ -86,8 +86,10 @@ registry_file.write(registry_config.format(REGISTRY_HOST))
 registry_file.close()
 
 print("Setting up links...")
+frontend_file = open("frontend.env", "w")
 # backend link for frontend
-env_file.write("VITE_API_URL=https://{}:{}".format(BACKEND_HOST, BACKEND_PORT))
+frontend_file.write("VITE_API_URL=https://{}:{}".format(BACKEND_HOST, BACKEND_PORT))
+frontend_file.close()
 
 env_file.close()
 print("Done.")
