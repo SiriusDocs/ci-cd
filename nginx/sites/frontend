@@ -40,9 +40,9 @@ server {
     } # managed by Certbot
 
       
-    server_name     certsirius.ru;
+    server_name certsirius.ru;
   
-    listen 80;
+    listen 80 default_server;
     return 404; # managed by Certbot
 
 
