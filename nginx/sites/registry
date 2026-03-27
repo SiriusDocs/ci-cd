@@ -1,7 +1,3 @@
-events {
-    worker_connections  1024;
-}
-
 http {
   upstream docker-registry {
     server 127.0.0.1:5000;
