@@ -23,7 +23,7 @@ storage:
     enabled: true
 auth:
   htpasswd:
-    realm: basic-realm
+    realm: "Registry Realm"
     path: /auth/htpasswd
 http:
   addr: localhost:5000
