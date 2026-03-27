@@ -59,7 +59,16 @@ services:
     networks:
       - client-side
 
-
+  frontend:
+    restart: always
+    image: registry.certsirius.ru/frontend-prod:latest
+    env_file:
+      - frontend.env
+    ports:
+      - 8888:8080
+    networks:
+      - client-side
+    
 networks:
   server-side: {}
   client-side: {}
