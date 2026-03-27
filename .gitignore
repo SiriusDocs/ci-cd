@@ -1,0 +1,3 @@
+*.env
+registry.yml
+htpasswd
