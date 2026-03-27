@@ -21,10 +21,6 @@ storage:
     maxthreads: 100
   delete:
     enabled: true
-auth:
-  htpasswd:
-    realm: "Registry Realm"
-    path: /auth/htpasswd
 http:
   addr: localhost:5000
   host: https://{}:443
