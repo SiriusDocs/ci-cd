@@ -6,6 +6,8 @@ import secrets
 alphabet = string.ascii_letters + string.digits
 
 REGISTRY_HOST = "registry.certsirius.ru"
+BACKEND_HOST = "api.certsirius.ru"
+BACKEND_PORT = "443"
 
 registry_config = """
 version: 0.1
@@ -82,6 +84,10 @@ print("Creating a registry.yml...");
 registry_file = open("registry.yml", "w")
 registry_file.write(registry_config.format(REGISTRY_HOST))
 registry_file.close()
+
+print("Setting up links...")
+# backend link for frontend
+env_file.write("VITE_API_URL=https://{}:{}".format(BACKEND_HOST, BACKEND_PORT))
 
 env_file.close()
 print("Done.")
