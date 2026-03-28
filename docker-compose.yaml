@@ -1,0 +1,73 @@
+services:
+  postgres:
+    image: 'postgres:18'
+    container_name: sirius-docs_mainDB
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    volumes:
+      - './pgdata:/var/lib/postgresql/data/pgdata'
+    command: |
+      postgres 
+              -c max_connections="200"
+              -c shared_buffers="3GB"
+              -c effective_cache_size="9GB"
+              -c maintenance_work_mem="768MB"
+              -c checkpoint_completion_target="0.9"
+              -c wal_buffers="16MB"
+              -c default_statistics_target="100"
+              -c random_page_cost="1.1"
+              -c effective_io_concurrency="200"
+              -c work_mem="15123kB"
+              -c huge_pages="off"
+              -c min_wal_size="1GB"
+              -c max_wal_size="4GB"
+              -c max_worker_processes="8"
+              -c max_parallel_workers_per_gather="4"
+              -c max_parallel_workers="8"
+              -c max_parallel_maintenance_workers="4"
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - server-side
+    tty: true
+    stdin_open: true
+
+  registry:
+    restart: always
+    image: registry:3
+    environment:
+      - OTEL_TRACES_EXPORTER=none
+      - REGISTRY_HTTP_SECRET=${REGISTRY_HTTP_SECRET}
+    ports:
+      - 4444:5000
+    volumes:
+      - ./registry-data:/var/lib/registry
+      - ./registry.yml:/etc/distribution/config.yml
+    networks:
+      - client-side
+
+  frontend:
+    restart: always
+    image: registry.certsirius.ru/frontend-prod:latest
+    env_file:
+      - frontend.env
+    ports:
+      - 8888:8080
+    networks:
+      - client-side
+    
+networks:
+  server-side: {}
+  client-side: {}
