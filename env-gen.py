@@ -12,18 +12,28 @@ BACKEND_PORT = "443"
 registry_config = """
 version: 0.1
 log:
-  accesslog:
-    disabled: false
   level: info
+  fields:
+    service: registry
+    environment: production
 storage:
-  filesystem:
-    rootdirectory: /var/lib/registry
-    maxthreads: 100
-  delete:
-    enabled: true
+    delete:
+      enabled: true
+    cache:
+        blobdescriptor: inmemory
+    filesystem:
+        rootdirectory: /var/lib/registry
+    tag:
+      concurrencylimit: 10
 http:
-  addr: localhost:5000
-  host: https://{}:443
+    addr: :5000
+    host: https://{}:443
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+
 """
 
 def generate_secret(l):
