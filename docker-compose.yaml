@@ -54,7 +54,7 @@ services:
       - 4444:5000
     volumes:
       - ./registry-data:/var/lib/registry
-      # - ./registry.yml:/etc/distribution/config.yml
+      - ./registry.yml:/etc/distribution/config.yml
     networks:
       - client-side
 
