@@ -2,14 +2,6 @@ upstream docker-registry {
     server 127.0.0.1:4444;
 }
 
-map "$request_method:$remote_user" $deny_push {
-    default 1;
-
-    "~^(GET|HEAD):" 0;
-    "~^(POST|PUT|PATCH|DELETE):cicd$" 0;
-    "~^(POST|PUT|PATCH|DELETE):kevindev64$" 0;
-}
-
 map $upstream_http_docker_distribution_api_version $docker_distribution_api_version {
     '' 'registry/2.0';
 }
@@ -47,10 +39,6 @@ server {
         proxy_set_header Authorization $http_authorization;
         proxy_read_timeout                  900;
         proxy_pass_request_body on;
-
-        if ($deny_push) {
-            return 401 "Push access denied for this user";
-        }
     }
 
     listen 443 ssl; # managed by Certbot
