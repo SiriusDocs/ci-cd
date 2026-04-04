@@ -25,6 +25,10 @@ storage:
         rootdirectory: /var/lib/registry
     tag:
       concurrencylimit: 10
+auth:
+  htpasswd:
+    realm: "basic-realm"
+    path: /auth/htpasswd
 http:
     addr: :5000
     host: https://{}:443

@@ -55,6 +55,7 @@ services:
     volumes:
       - ./registry-data:/var/lib/registry
       - ./registry.yml:/etc/distribution/config.yml
+      - ./registry-auth:/auth
     networks:
       - client-side
 
