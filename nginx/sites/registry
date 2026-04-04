@@ -16,6 +16,9 @@ map $upstream_http_docker_distribution_api_version $docker_distribution_api_vers
 
 
 server {
+    access_log      /var/log/nginx/registry.access.log;
+    error_log       /var/log/nginx/registry.error.log;
+
     server_name registry.certsirius.ru;
 
     # disable any limits to avoid HTTP 413 for large image uploads
