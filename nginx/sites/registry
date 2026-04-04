@@ -2,10 +2,12 @@ upstream docker-registry {
     server 127.0.0.1:4444;
 }
 
-map $remote_user $push_allowed {
-    default 0;
-    cicd 1;
-    kevindev64 1;
+map "$request_method:$remote_user" $deny_push {
+    default 1;
+
+    "~^(GET|HEAD):" 0;
+    "~^(POST|PUT|PATCH|DELETE):cicd$" 0;
+    "~^(POST|PUT|PATCH|DELETE):kevindev64$" 0;
 }
 
 map $upstream_http_docker_distribution_api_version $docker_distribution_api_version {
@@ -39,14 +41,12 @@ server {
         proxy_set_header  X-Real-IP         $remote_addr; # pass on real client's IP
         proxy_set_header  X-Forwarded-For   $proxy_add_x_forwarded_for;
         proxy_set_header  X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization $http_authorization;
         proxy_read_timeout                  900;
         proxy_pass_request_body on;
-        proxy_pass_header Authorization;
 
-        if ($request_method ~ ^(POST|PUT|PATCH|DELETE)$) {
-            if ($push_allowed = 0) {
-                return 403 "Push access denied for this user";
-            }
+        if ($deny_push) {
+            return 403 "Push access denied for this user";
         }
     }
 
