@@ -49,7 +49,7 @@ server {
         proxy_pass_request_body on;
 
         if ($deny_push) {
-            return 403 "Push access denied for this user";
+            return 401 "Push access denied for this user";
         }
     }
 
