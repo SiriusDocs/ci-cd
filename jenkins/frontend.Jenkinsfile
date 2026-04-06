@@ -27,8 +27,8 @@ pipeline {
         stage('Build & Push') {
             steps {
                 script {
-                    docker.withRegistry("https://${REGISTRY_URL}/${NAMESPACE}", env.REGISTRY_CREDENTIALS_ID) {
-                        def customImage = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                    docker.withRegistry("https://${REGISTRY_URL}", env.REGISTRY_CREDENTIALS_ID) {
+                        def customImage = docker.build("${NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}")
                         customImage.push()
                         customImage.push('latest')
                     }
