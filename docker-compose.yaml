@@ -44,21 +44,6 @@ services:
     tty: true
     stdin_open: true
 
-  registry:
-    restart: always
-    image: registry:3
-    environment:
-      - OTEL_TRACES_EXPORTER=none
-      - REGISTRY_HTTP_SECRET=${REGISTRY_HTTP_SECRET}
-    ports:
-      - 4444:5000
-    volumes:
-      - ./registry-data:/var/lib/registry
-      - ./registry.yml:/etc/distribution/config.yml
-      - ./registry-auth:/auth
-    networks:
-      - client-side
-
   frontend:
     restart: always
     image: registry.certsirius.ru/frontend-prod:latest
