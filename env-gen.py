@@ -67,7 +67,7 @@ env_file.write("# If you want to add/remove/change any strings, you should rewri
 # .env data
 env_file.write("POSTGRES_USER=postgres\n")
 env_file.write("POSTGRES_DB=postgres\n")
-env_file.write("POSTGRES_HOST=db\n")
+env_file.write("POSTGRES_HOST=postgres\n")
 
 postgres_password = constant_secret(init_postgresql, "postgres")
 env_file.write("POSTGRES_PASSWORD={}\n".format(postgres_password))
