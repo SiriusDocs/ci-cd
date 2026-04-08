@@ -1,0 +1,23 @@
+env: "local"
+
+http_server:
+  host: "{}"
+  port: 8080
+  timeout: 4s
+  idle_timeout: 60s
+  allowed_origins:
+  - http://{}:5173
+  - http://{}:5174
+  - http://{}:3000
+
+
+clients:
+  auth_service:
+    address: "localhost:44044"
+    timeout: 5s
+    retries_count: 3
+
+  temp_service:
+    address: "localhost:44045"
+    timeout: 5s
+    retries_count: 3
