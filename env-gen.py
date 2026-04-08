@@ -48,11 +48,12 @@ env_file.write("POSTGRES_HOST=db\n")
 
 constant_password(init_postgresql, "POSTGRES_PASSWORD", "postgres")
 
-print("Setting up links...")
+print("Setting up frontend.env ...", end="")
 frontend_file = open("frontend.env", "w")
 # backend link for frontend
 frontend_file.write("VITE_API_URL=https://{}:{}".format(BACKEND_HOST, BACKEND_PORT))
 frontend_file.close()
+print("done!")
 
 env_file.close()
-print("Done.")
+print("Env files generated.")
