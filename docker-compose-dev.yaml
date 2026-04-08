@@ -45,7 +45,9 @@ services:
     stdin_open: true
 
   template_service_migrator:
-    image: registry.certsirius.ru/siriusdocs/template-service-migrator:latest
+    build:
+      context: backend/template_service
+      dockerfile: template_service_migrator.Dockerfile
     env_file: template_service.env
     networks:
       - server-side
@@ -61,7 +63,9 @@ services:
 
   template_service:
     restart: always
-    image: registry.certsirius.ru/siriusdocs/template-service:latest
+    build:
+      context: backend/template_service
+      dockerfile: template_service.Dockerfile
     env_file: template_service.env
     networks:
       - server-side
@@ -73,7 +77,9 @@ services:
         condition: service_completed_successfully
   
   auth_service_migrator:
-    image: registry.certsirius.ru/siriusdocs/auth-service-migrator:latest
+    build:
+      context: backend/auth_service
+      dockerfile: auth_service_migrator.Dockerfile
     env_file: auth_service.env
     networks:
       - server-side
@@ -91,7 +97,9 @@ services:
 
   auth_service:
     restart: always
-    image: registry.certsirius.ru/siriusdocs/auth-service:latest
+    build:
+      context: backend/auth_service
+      dockerfile: auth_service.Dockerfile
     env_file: auth_service.env
     networks:
       - server-side
@@ -106,7 +114,9 @@ services:
 
   api_gateway:
     restart: always
-    image: registry.certsirius.ru/siriusdocs/api-gateway:latest
+    build:
+      context: backend/api_gateway
+      dockerfile: api_gateway.Dockerfile
     env_file: api_gateway.env
     networks:
       - client-side
@@ -124,7 +134,9 @@ services:
 
   frontend:
     restart: always
-    image: registry.certsirius.ru/siriusdocs/frontend-prod:latest
+    build:
+      context: frontend
+      dockerfile: ./Dockerfile
     env_file:
       - frontend.env
     ports:
