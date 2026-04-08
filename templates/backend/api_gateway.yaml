@@ -13,11 +13,11 @@ http_server:
 
 clients:
   auth_service:
-    address: "localhost:44044"
+    address: "auth_service:44044"
     timeout: 5s
     retries_count: 3
 
   temp_service:
-    address: "localhost:44045"
+    address: "template_service:44045"
     timeout: 5s
     retries_count: 3
