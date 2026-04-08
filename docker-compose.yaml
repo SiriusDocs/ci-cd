@@ -44,9 +44,66 @@ services:
     tty: true
     stdin_open: true
 
+  template_service_migrator:
+    image: registry.certsirius.ru/siriusdocs/template-service-migrator:latest
+    env_file: template_service.env
+    networks:
+      - server-side
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  template_service:
+    restart: always
+    image: registry.certsirius.ru/siriusdocs/template-service:latest
+    env_file: template_service.env
+    ports:
+      - 3000:3000
+    networks:
+      - server-side
+    depends_on:
+      template_service_migrator:
+        condition: service_completed_successfully
+  
+  auth_service_migrator:
+    image: registry.certsirius.ru/siriusdocs/auth-service-migrator:latest
+    env_file: auth_service.env
+    networks:
+      - server-side
+    depends_on:
+      postgres:
+        condition: service_healthy
+      template_service:
+        condition: service_started
+
+  auth_service:
+    restart: always
+    image: registry.certsirius.ru/siriusdocs/auth-service:latest
+    env_file: auth_service.env
+    networks:
+      - server-side
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth_service_migrator:
+        condition: service_completed_successfully
+
+  api_gateway:
+    restart: always
+    image: registry.certsirius.ru/siriusdocs/api-gateway:latest
+    env_file: api_gateway.env
+    networks:
+      - client-side
+      - server-side
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth_service:
+        condition: service_started
+
   frontend:
     restart: always
-    image: registry.certsirius.ru/frontend-prod:latest
+    image: registry.certsirius.ru/siriusdocs/frontend-prod:latest
     env_file:
       - frontend.env
     ports:
