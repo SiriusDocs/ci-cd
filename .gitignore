@@ -6,3 +6,5 @@ registry-data*
 pgdata/
 *.secret
 yaml/*.yaml
+backend/
+frontend/
