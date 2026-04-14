@@ -18,7 +18,7 @@ RUN npm run build
 # Stage 2: Runner
 # =========================================
 
-FROM nginx:1.29-alpine AS runner
+FROM nginx:1.29 AS runner
 
 # COPY nginx.conf /etc/nginx/nginx.conf
 
