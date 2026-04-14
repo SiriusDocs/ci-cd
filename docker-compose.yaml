@@ -45,7 +45,7 @@ services:
     stdin_open: true
 
   template_service_migrator:
-    image: registry.certsirius.ru/siriusdocs/template-service-migrator:latest
+    image: registry.certsirius.ru/siriusdocs/template-service-migrator-prod:latest
     env_file: template_service.env
     networks:
       - server-side
@@ -61,7 +61,7 @@ services:
 
   template_service:
     restart: always
-    image: registry.certsirius.ru/siriusdocs/template-service:latest
+    image: registry.certsirius.ru/siriusdocs/template-service-prod:latest
     env_file: template_service.env
     networks:
       - server-side
@@ -73,7 +73,7 @@ services:
         condition: service_completed_successfully
   
   auth_service_migrator:
-    image: registry.certsirius.ru/siriusdocs/auth-service-migrator:latest
+    image: registry.certsirius.ru/siriusdocs/auth-service-migrator-prod:latest
     env_file: auth_service.env
     networks:
       - server-side
@@ -91,7 +91,7 @@ services:
 
   auth_service:
     restart: always
-    image: registry.certsirius.ru/siriusdocs/auth-service:latest
+    image: registry.certsirius.ru/siriusdocs/auth-service-prod:latest
     env_file: auth_service.env
     networks:
       - server-side
@@ -106,7 +106,7 @@ services:
 
   api_gateway:
     restart: always
-    image: registry.certsirius.ru/siriusdocs/api-gateway:latest
+    image: registry.certsirius.ru/siriusdocs/api-gateway-prod:latest
     env_file: api_gateway.env
     networks:
       - client-side
