@@ -37,15 +37,15 @@ def constant_password(init_flag, env_name, filename):
         db_file.close()
         env_file.write("{}={}\n".format(env_name, password))
 
-api_gateway_template_file = open("templates/backend/api_gateway.env", "r")
+api_gateway_template_file = open("templates/backend/api_gateway.env.example", "r")
 api_gateway_template = "".join(api_gateway_template_file.readlines())
 api_gateway_template_file.close()
 
-auth_service_template_file = open("templates/backend/auth_service.env", "r")
+auth_service_template_file = open("templates/backend/auth_service.env.example", "r")
 auth_service_template =  "".join(auth_service_template_file.readlines())
 auth_service_template_file.close()
 
-template_service_template_file = open("templates/backend/template_service.env", "r")
+template_service_template_file = open("templates/backend/template_service.env.example", "r")
 template_service_template =  "".join(template_service_template_file.readlines())
 template_service_template_file.close()
 
