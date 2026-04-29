@@ -11,19 +11,6 @@ FRONTEND_HOST = "certsirius.ru"
 def generate_secret(l):
     return ''.join(secrets.choice(alphabet) for i in range(l))
 
-def constant_password(init_flag, filename):
-    if init_flag:
-        secret = generate_secret(64)
-        secret_file = open("{}.secret".format(filename), "w")
-        secret_file.write("{}".format(secret))
-        secret_file.close()
-        return secret
-    else:
-        secret_file = open("{}.secret".format(filename), "r")
-        secret = secret_file.readlines()[0]
-        secret_file.close()
-        return secret
-    
 
 # read templates
 api_gateway_template_file = open("templates/backend/api_gateway.yaml", "r")
