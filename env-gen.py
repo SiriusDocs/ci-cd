@@ -80,13 +80,13 @@ frontend_file.close()
 print("done!")
 
 
-if input("Are you want to generate backend auth signing key? (Y[y]/N[n]) ") in ["Y", "y"]:
+if input("Do you want to generate backend auth signing key? (Y[y]/N[n]) ") in ["Y", "y"]:
     signing_key_flag = True
 else: 
     signing_key_flag  = False
 signing_key = constant_secret(signing_key_flag, "auth_signing_key")
 
-if input("Are you want to generate backend auth salt? (Y[y]/N[n]) ") in ["Y", "y"]:
+if input("Do you want to generate backend auth salt? (Y[y]/N[n]) ") in ["Y", "y"]:
     salt_flag = True
 else: 
     salt_flag  = False
