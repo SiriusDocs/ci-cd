@@ -1,0 +1,4 @@
+temp_service:
+  port: 44045
+  timeout: 5s
+  retries_count: 3

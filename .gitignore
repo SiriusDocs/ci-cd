@@ -1,6 +1,20 @@
-*.env
-registry.yml
-htpasswd
-registry-auth*
-registry-data*
+# Database data
 pgdata/
+
+# Generated configs and secrets
+*.secret
+yaml/*.yaml
+
+# Other repositories
+backend/
+frontend/
+
+# Templates
+!templates/backend
+
+# .env files
+.env 
+api_gateway.env
+auth_service.env
+frontend.env
+template_service.env

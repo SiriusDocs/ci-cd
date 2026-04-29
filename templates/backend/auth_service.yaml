@@ -1,0 +1,4 @@
+auth_service:
+  port: 44044
+  timeout: 5s
+  retries_count: 3
