@@ -24,7 +24,7 @@ FROM nginx:1.29 AS runner
 
 COPY --chown=nginx:nginx --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 8080
+EXPOSE 80
 
 ENTRYPOINT ["nginx", "-c", "/etc/nginx/nginx.conf"]
 CMD ["-g", "daemon off;"]
